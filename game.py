@@ -62,7 +62,7 @@ class GameSprite(sprite.Sprite):
                 else:
                     self.isJump = False
                     self.jump_size = 13
-
+            #старый код
             #else:
             #    self.jump_size = self.rect.top - platform.rect.bottom
 
