@@ -265,16 +265,7 @@ while playing:
                 jugg.speed_y = 0
                 jugg.rect.bottom -= 150
 
-        #if ev.key == K_q and ev.type == KEYDOWN:
-        #    jugg.image = transform.scale(image.load("sprites/shooting_jugg.png"), jugg.size)
-        #    jugg.fire_in_the_hole()
 
-
-    # window.fill((49, 204, 7)) // заливала задний фон зелёным цветом по rgb коду
-    #window.blit(floor, (0, 500))
-    #window.blit(platform1,(450, 400))
-    #window.blit(square, (100,500))
-    #window.blit(walking_right[number_animation],(50,350))
     window.blit(bg, (0, 0))
     floor.show_on_screen()
     jugg.move_right()
