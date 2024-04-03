@@ -29,80 +29,81 @@ class GameSprite(sprite.Sprite):
         self.rect.y = y
         self.speed_x = 0
         self.speed_y = 0
-        self.gravity = 10
+        self.gravity = 15
         self.jump_size = jump_size
-    def show_on_screen(self, x, y):
+    def show_on_screen(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
-    def jump(self, platform):
+    def jump(self, platforms):
         #if not self.isJump:
+        #        self.can_jump = True
+
         #    if keys[K_SPACE]:
         #        self.isJump = True
-        #        self.can_jump = True
-        #else:
+          #else:
             #if not platform.rect.colliderect(self.rect.x, self.rect.y - (self.jump_size ** 2 ) / 2, self.image.get_width(), self.image.get_height()):
-                if self.jump_size >= -12:
-                    if self.jump_size < 0:
-                        self.rect.y += (self.jump_size ** 2 ) / 2
-                        if self.rect.bottom <= platform.rect.top:
-                            if self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width() and self.rect.colliderect(platform1.rect) == 0:
-                                #print(self.rect.x, platform.rect.centerx)
-                            #print(f"platforms x: {platform.rect.x}, platforms x + his width: {platform.rect.x + platform.image.get_width()}")
-                                ...
-                                #self.isJump = False
-                                #if self.isJump == False:
-                                #    self.rect.bottom = platform.rect.top + 10
-
-                    else:
-                        self.rect.y -= (self.jump_size ** 2 ) / 2
-
-                    self.jump_size -= 2
-                        #else:
-                    #       self.isJump = False
-
+        if self.jump_size >= -13:
+                if self.jump_size < 0:
+                    self.speed_y = (self.jump_size ** 2 ) // 2
                 else:
-                    self.isJump = False
-                    self.jump_size = 13
+                    self.speed_y = -((self.jump_size ** 2 ) // 2)
+                self.jump_size -= 2
 
-            #else:
-            #    self.jump_size = self.rect.top - platform.rect.bottom
+        else:
+            self.isJump = False
+            self.speed_y = 0
+            self.jump_size = 13
 
-            #    if self.jump_size >= self.jump_size:
-            #        if self.jump_size < 0:
-            #            self.speed_y = (self.jump_size ** 2 ) / 2
-            #        elif self.jump_size > 0:
-            #            self.speed_y = -((self.jump_size ** 2 ) / 2)
-            #        self.jump_size -= 1
 
-            #    else:
-            #        self.isJump = False
-            #        self.jump_size = 12
-    def update(self, platform):
+    def update(self, platforms):
         global width
         global height
         global ground_height
-        if self.rect.x <= platform.rect.x - 110 or self.rect.x >= platform.rect.x - 150 + platform.image.get_width():
-            self.rect.x += self.speed_x
-            self.rect.y += self.gravity
-            self.rect.y += self.speed_y
-            print(self.isJump)
-        elif self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width() and self.rect.bottom != platform.rect.top + 10:
-            self.rect.x += self.speed_x
-            self.rect.y += self.gravity
-            self.rect.y += self.speed_y
-            print(self.isJump)
-        #elif self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width() and self.isJump:
+
+        self.rect.x += self.speed_x
+        self.rect.y += self.gravity
+        self.rect.y += self.speed_y
+        #этот код не трогать(он на крайний случай):
+        #for platform in platforms:
 #
-        #    self.rect.x += self.speed_x
-        #    self.rect.y += self.gravity
-        #    self.rect.y += self.speed_y
+        #    if self.rect.x >= platform.rect.x and self.rect.x <= platform.rect.x + platform.image.get_width():
+        #        self.gravity = 0
+        #    else:
+        #        self.rect.x += self.speed_x
+        #        self.rect.y += self.gravity
+        #        self.rect.y += self.speed_y
+        #    if self.rect.x >= 390 and self.rect.x <= 450:
+        #        self.gravity = 12
+        #    elif self.rect.x >= -90 and self.rect.x <= -10:
+        #        self.gravity = 12
+        #    elif self.rect.x >= 890 and self.rect.x <= 1050:
+        #        self.gravity = 12
+        #    elif self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width() and self.rect.bottom != platform.rect.top:
+        #        self.rect.x += self.speed_x
+        #        self.rect.y += self.gravity
+        #        self.rect.y += self.speed_y
+        keys = key.get_pressed()
+        number_platform = 0
+        for platform in platforms:
+            if platform.rect.colliderect(self.rect.x, self.rect.y + self.speed_y, self.image.get_width(), self.image.get_height()):
+                if self.rect.bottom < platform.rect.centery:
+                    if self.speed_y >= 0:
+                        if self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width():
+                            self.rect.bottom = platform.rect.top
+                            self.isJump = False
+                            if keys[K_SPACE]:
+                                self.jump_size = 13
+                                self.speed_y = -13
 
 
-
+        for platform in platforms:
+            if self.rect.bottom > platform.rect.top and self.speed_y == -13:
+                self.speed_y = 0
+                self.rect.bottom -= 150
+                self.isJump = False
         if self.rect.bottom-25 > height - ground_height:
             self.speed_y = 0
             self.rect.bottom = height - ground_height + 25
-        if platform.rect.colliderect(self.rect.x, self.rect.y - self.jump_size, self.image.get_width(), self.image.get_height()):
-            ...
+
 
 class Bullet(GameSprite):
     def update(self, direction=0):
@@ -203,7 +204,6 @@ class Player(GameSprite):
         num_anim += 1
 bg = transform.scale(image.load("sprites/desert.jpg"),size_window)
 
-#floor = transform.scale(image.load("sprites/dirt_floor.png"), (800, 100))
 walking_right = [
     image.load("sprites/jugg/jugg_without_bg.png"),
     image.load("sprites/walking_right/walking_jugg_r1.png"),
@@ -246,17 +246,24 @@ jugg = Player("sprites/jugg/jugg_without_bg.png", 20,(250,200),walking_right, wa
 
 bullets = sprite.Group()
 direction = -1
-#jugg.image = transform.scale(jugg.walking_right_anim[jugg.num_of_animation], jugg.size)
 num_anim = 0
-platform1 = GameSprite("sprites/sand_platform.png", 1, (400,60), ..., ..., 1, 600,581)
-#platform1 = transform.scale(image.load("sprites/sand_platform.png"), (400,60))
+platforms = sprite.Group()
+platform1 = GameSprite("sprites/sand_platform.png", 1, (400,60), ..., ..., 1, 700,550)
+platform2 = GameSprite("sprites/sand_platform.png", 1, (500,60), ..., ..., 1, 100, 600)
+platform3 = GameSprite("sprites/sand_platform.png", 1, (400,60), ..., ..., 1, 100, 500)
+platforms.add(platform1)
+platforms.add(platform2)
+platforms.add(platform3)
 while playing:
     for ev in event.get():
         if ev.type == QUIT:
             playing = False
         if ev.type == KEYDOWN:
-            if ev.key == K_SPACE:
+            if ev.key == K_SPACE and jugg.rect.bottom > platform2.rect.bottom:
                 jugg.isJump = True
+            elif ev.key == K_SPACE and jugg.rect.bottom <= platform2.rect.top:
+                jugg.speed_y = 0
+                jugg.rect.bottom -= 150
 
         #if ev.key == K_q and ev.type == KEYDOWN:
         #    jugg.image = transform.scale(image.load("sprites/shooting_jugg.png"), jugg.size)
@@ -269,17 +276,17 @@ while playing:
     #window.blit(square, (100,500))
     #window.blit(walking_right[number_animation],(50,350))
     window.blit(bg, (0, 0))
-    platform1.show_on_screen(platform1.rect.x, platform1.rect.y)
-    floor.show_on_screen(floor.rect.x, floor.rect.y)
+    floor.show_on_screen()
     jugg.move_right()
     jugg.move_left()
     jugg.fire_in_the_hole()
+    jugg.update(platforms)
     if jugg.isJump:
-        jugg.jump(platform1)
-    jugg.update(platform1)
+        jugg.jump(platforms)
     bullets.draw(window)
     bullets.update()
-    jugg.show_on_screen(jugg.rect.x, jugg.rect.y)
+    platforms.draw(window)
+    jugg.show_on_screen()
     keys = key.get_pressed()
     #if sprite.collide_rect(jugg, platform1):
     #    jugg.jump_size = 12
@@ -301,7 +308,7 @@ while playing:
         num_anim = 0
     else:
         jugg.hitting()
-
+        
     display.update()
     num_anim += 1
     clock.tick(10)
