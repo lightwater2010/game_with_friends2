@@ -283,9 +283,9 @@ while playing:
     jugg.update(platforms)
     if jugg.isJump:
         jugg.jump(platforms)
+    platforms.draw(window)
     bullets.draw(window)
     bullets.update()
-    platforms.draw(window)
     jugg.show_on_screen()
     keys = key.get_pressed()
     #if sprite.collide_rect(jugg, platform1):
