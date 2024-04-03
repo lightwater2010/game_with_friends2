@@ -45,20 +45,12 @@ class GameSprite(sprite.Sprite):
                         self.rect.y += (self.jump_size ** 2 ) / 2
                         if self.rect.bottom <= platform.rect.top:
                             if self.rect.x >= platform.rect.x - 110 and self.rect.x <= platform.rect.x - 150 + platform.image.get_width() and self.rect.colliderect(platform1.rect) == 0:
-                                #print(self.rect.x, platform.rect.centerx)
-                            #print(f"platforms x: {platform.rect.x}, platforms x + his width: {platform.rect.x + platform.image.get_width()}")
-                                ...
-                                #self.isJump = False
-                                #if self.isJump == False:
-                                #    self.rect.bottom = platform.rect.top + 10
+                                pass
+                                
 
                     else:
                         self.rect.y -= (self.jump_size ** 2 ) / 2
-
                     self.jump_size -= 2
-                        #else:
-                    #       self.isJump = False
-
                 else:
                     self.isJump = False
                     self.jump_size = 13
