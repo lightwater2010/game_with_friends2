@@ -240,7 +240,6 @@ direction = -1
 #jugg.image = transform.scale(jugg.walking_right_anim[jugg.num_of_animation], jugg.size)
 num_anim = 0
 platform1 = GameSprite("sprites/sand_platform.png", 1, (400,60), ..., ..., 1, 600,581)
-#platform1 = transform.scale(image.load("sprites/sand_platform.png"), (400,60))
 while playing:
     for ev in event.get():
         if ev.type == QUIT:
@@ -249,16 +248,6 @@ while playing:
             if ev.key == K_SPACE:
                 jugg.isJump = True
 
-        #if ev.key == K_q and ev.type == KEYDOWN:
-        #    jugg.image = transform.scale(image.load("sprites/shooting_jugg.png"), jugg.size)
-        #    jugg.fire_in_the_hole()
-
-
-    # window.fill((49, 204, 7)) // заливала задний фон зелёным цветом по rgb коду
-    #window.blit(floor, (0, 500))
-    #window.blit(platform1,(450, 400))
-    #window.blit(square, (100,500))
-    #window.blit(walking_right[number_animation],(50,350))
     window.blit(bg, (0, 0))
     platform1.show_on_screen(platform1.rect.x, platform1.rect.y)
     floor.show_on_screen(floor.rect.x, floor.rect.y)
@@ -272,12 +261,6 @@ while playing:
     bullets.update()
     jugg.show_on_screen(jugg.rect.x, jugg.rect.y)
     keys = key.get_pressed()
-    #if sprite.collide_rect(jugg, platform1):
-    #    jugg.jump_size = 12
-    #    jugg.isJump = False
-    #    jugg.rect.y = platform1.rect.y - jugg.rect.height
-    #    if sprite.collide_rect(jugg,platform1):
-    #        jugg.rect.y = platform1.rect.y + jugg.rect.height
     if jugg.num_of_animation == 4:
         jugg.num_of_animation = 0
     else:
