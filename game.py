@@ -2,6 +2,7 @@ from random import randint
 
 from pygame import *
 
+w = 2
 width = 1200
 height = 800
 size_window = (width,height)
@@ -33,6 +34,12 @@ class GameSprite(sprite.Sprite):
         self.jump_size = jump_size
     def show_on_screen(self, x, y):
         window.blit(self.image, (self.rect.x, self.rect.y))
+    def move_by_keys(self, x, y):
+        if keys[pygame.K_LEFT]:
+           self.rect.x -= self.speed
+        elif keys[pygame.K_RIGHT]:
+           self.rect.x += self.speed
+    
     def jump(self, platform):
         #if not self.isJump:
         #    if keys[K_SPACE]:
