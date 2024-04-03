@@ -180,7 +180,6 @@ class Player(GameSprite):
             #    else:
             #        self.isJump = False
             #        self.jump_size = 12
-
     def fire_in_the_hole(self):
         keys = key.get_pressed()
         global bullets
