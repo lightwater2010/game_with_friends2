@@ -91,15 +91,8 @@ class GameSprite(sprite.Sprite):
                             self.rect.bottom = platform.rect.top
                             self.isJump = False
                             if keys[K_SPACE]:
-                                self.jump_size = 13
-                                self.speed_y = -13
+                                self.rect.bottom -= 150
 
-
-        for platform in platforms:
-            if self.rect.bottom > platform.rect.top and self.speed_y == -13:
-                self.speed_y = 0
-                self.rect.bottom -= 150
-                self.isJump = False
         if self.rect.bottom-25 > height - ground_height:
             self.speed_y = 0
             self.rect.bottom = height - ground_height + 25
@@ -261,9 +254,10 @@ while playing:
         if ev.type == KEYDOWN:
             if ev.key == K_SPACE and jugg.rect.bottom > platform2.rect.bottom:
                 jugg.isJump = True
-            elif ev.key == K_SPACE and jugg.rect.bottom <= platform2.rect.top:
+            elif ev.key == K_SPACE and jugg.rect.bottom == platform2.rect.top:
                 jugg.speed_y = 0
                 jugg.rect.bottom -= 150
+                jugg.isJump = False
 
     window.blit(bg, (0, 0))
     floor.show_on_screen()
