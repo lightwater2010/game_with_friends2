@@ -94,11 +94,6 @@ class GameSprite(sprite.Sprite):
                                 self.rect.bottom -= 150
 
 
-        for platform in platforms:
-            if self.rect.bottom > platform.rect.top and self.speed_y == -13:
-                self.speed_y = 0
-                self.rect.bottom -= 150
-                self.isJump = False
         if self.rect.bottom-25 > height - ground_height:
             self.speed_y = 0
             self.rect.bottom = height - ground_height + 25
